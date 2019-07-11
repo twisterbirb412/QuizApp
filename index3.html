@@ -3,27 +3,36 @@
 <head>
     <title>Quiz App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
-    <link rel="stylesheet" href="main3.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <header>
-        <div class="">
-        <div class="question-count-container"></div>
+        <div class="count-container question">
+            <h2>Question 4</h2>
+        </div>
+        <div class="count-container score">
+            <h3>Score: 2 out of 10 correct</h3>
+        </div>
     </header>
     <main>
-        <div class="opening-screen main-container">
-            <h1>How well do you know your birds?</h1>
-            <h2>Click Start to begin!</h2>
-            <button class="start-button">
-                <span class="button-label">Start</span>
-            </button>
-        </div>
-        <div class="quiz-container main-container">
-            <div class="img-container"></div>
+        <div class="main-container quiz-container">
+            <div class="img-container">
+                <img src="Bird_Photos/Bird4.jpg" alt="A tanish gray, rounded bird with black spots">
+            </div>
             <div class="quiz-content">
-                <!--button type="submit">Submit</button>-->
+                <form role="form">
+                    <label>Which bird is this?</label><br>
+                    <input type="radio" name="birdType" value="Mocking_bird"><label class="birdType incorrect">Mocking Bird</label><br>
+                    <input type="radio" name="birdType" value="Mourning_dove"><label class="birdType correct">Mourning Dove</label><br>
+                    <input type="radio" name="birdType" value="Tufted_titmouse"><label class="birdType incorrect">Tufted Titmouse</label><br>
+                    <input type="radio" name="birdType" value="English_sparrow"><label class="birdType incorrect">English Sparrow</label><br>
+                </form>
+                <button type="submit" class="start-button">
+                        <span class="button-label">Continue</span>
+                </button>
             </div>
             <div class="question-results"></div>
+            <p>Incorrect</p>
         </div>
     </main>
     <footer>

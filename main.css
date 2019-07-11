@@ -13,27 +13,40 @@ main {
   align-items: center;
 }
 
-.opening-screen {
-  margin-top: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-  background-color: red;
-  border: 1px solid gray;
-}
-
-.opening-screen * {
-  margin: auto;
-  text-align: center;
-}
 header {
     padding: 5px;
+}
+
+.count-container {
+  position: absolute;
+}
+
+.question {
+  top: 10px;
+  left: 10px;
+}
+
+.score {
+  top: 5px;
+  right: 10px;
+}
+
+h2 {
+  font-size: 36px;
+  font-style: bold;
+}
+
+h3 {
+  font-size: 20px;
+  font-style: bold;
 }
 
 button {
     padding: 5px;
     position: relative;
-    left: 90%;
+    right: 50%;
+    bottom: 10%;
+    margin: 20px;
 
   }
   
@@ -44,7 +57,7 @@ button {
 .main-container {
     width: 80%;
     height: 80%;
-    margin: auto;
+    margin: 7%;
     border: 1px solid gray;
     padding: 5%;
     display: flex;
@@ -55,13 +68,32 @@ button {
 .img-container {
     height: 400px;
     max-width: 50%;
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 10px;
+    object-fit: contain;
 }
 
 img {
    max-height: 100%;
    max-width: auto;
+ }
 
+ .quiz-content {
+   padding: 30px;
+ }
+
+ .question-results{
+   position: absolute;
+   bottom: -30px;
+ }
+
+ .correct {
+   color: green;
+ }
+
+ .incorrect {
+   color: red;
+ }
+
+ .selected {
+   font-weight: 700;
  }
