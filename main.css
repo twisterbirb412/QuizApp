@@ -43,9 +43,6 @@ h3 {
 
 button {
     padding: 5px;
-    position: relative;
-    right: 50%;
-    bottom: 10%;
     margin: 20px;
 
   }
@@ -81,19 +78,32 @@ img {
    padding: 30px;
  }
 
- .question-results{
-   position: absolute;
-   bottom: -30px;
- }
 
- .correct {
+ .correct.selected {
    color: green;
  }
 
- .incorrect {
+ .incorrect.selected {
    color: red;
  }
 
+
  .selected {
-   font-weight: 700;
+   font-weight: 900;
  }
+
+ .incorrect {
+   text-decoration: line-through;
+ }
+
+p {
+  font-size: 20px;
+}
+
+.incorrect-answer {
+  color: red;
+}
+
+.correct-answer {
+  color: green;
+}
