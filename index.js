@@ -4,13 +4,21 @@
 
 //need variable to store question count and score count
 //need variable that stores submitted answer
+let questCount = 0;
+let scoreCount = 0;
+
+
 
 //The starting screen 
 //should have a button that users can click to start the quiz.
 
 //-----button event listeners----------------
 function startButtonPress() {
-    //event listener for start button
+    $(".start").click(function() {
+        event.preventDefault();
+        window.alert('startButtonPress is working');
+        startQuiz();
+    });
 }
 
 function restartButtonPress() {
@@ -37,18 +45,19 @@ function buttonContinueQuiz() {
 //-----initializing quiz-----------------------
 
 function clearMainContainer() {
-    //clears all contents within main container with the
-    //exception of the button
+    $(".main-container").empty();
 
 }
 
 function resetCountAndScore() {
-    //resets quesiton count variable
-    //resets score count variable
+    questCount = 0;
+    scoreCount = 0;
 }
 
 function createImageContainer(){
     //creates div class 'img-container' inside main-container
+    let htmlText = `<div class="img-container"></div>`
+    $(".main-container").append(htmlText);
 }
 
 function createQuizContainer() {
@@ -70,14 +79,15 @@ function clearVariables(){
 function startQuiz() {
     //restarts the quiz at question 1
     //changes second class of 'bookend-screen' to 'quiz-container'
+    clearMainContainer();
     resetCountAndScore();
     createImageContainer();
-    createQuizContainer();
-    createQuestionResults();
-    createQuizForm();
-    clearVariables();
-    nextQuestion();
-    nextImage();
+    //createQuizContainer();
+    //createQuestionResults();
+    //createQuizForm();
+    //clearVariables();
+    //nextQuestion();
+    //nextImage();
 }
 
 //----action functions----------------
@@ -164,3 +174,15 @@ function endOfQuiz() {
     clearMainContainerToBookend();
     addEndText();
 }
+
+function runQuizApp() {
+    startButtonPress();
+    restartButtonPress();
+    buttonSubmitQuestion();
+
+    window.alert('runQuizApp is working');
+
+    
+}
+
+$(runQuizApp);
