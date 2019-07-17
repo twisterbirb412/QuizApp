@@ -14,7 +14,7 @@ let scoreCount = 0;
 
 //-----button event listeners----------------
 function startButtonPress() {
-    $(".start").click(function() {
+    $(".main-container").on("click", ".start", function(event) {
         event.preventDefault();
         window.alert('startButtonPress is working');
         startQuiz();
@@ -23,7 +23,7 @@ function startButtonPress() {
 
 function restartButtonPress() {
     //listen for when restart button press
-    startQuiz();
+    //startQuiz();
 }
 
 function buttonSubmitQuestion() {
@@ -33,7 +33,7 @@ function buttonSubmitQuestion() {
         //event that adds classes to the birdtype in the label
         //based on what the array says the answer is
         //stores variable that contains user answer
-        showResults();
+        //showResults();
 }
 
 function buttonContinueQuiz() {
@@ -46,6 +46,7 @@ function buttonContinueQuiz() {
 
 function clearMainContainer() {
     $(".main-container").empty();
+    window.alert('ClearMainContainer is working');
 
 }
 
@@ -58,6 +59,7 @@ function createImageContainer(){
     //creates div class 'img-container' inside main-container
     let htmlText = `<div class="img-container"></div>`
     $(".main-container").append(htmlText);
+    window.alert("CreateImageContainer ran");
 }
 
 function createQuizContainer() {
