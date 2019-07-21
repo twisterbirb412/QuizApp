@@ -176,6 +176,7 @@ function createQuestionArray() {
         let correctAns = false;
         let iterateVar = 'answer' + String(i);
         let answerX = questArray[iterateVar];
+        returnArray = {};
 
         //need to check to see if correct answer
             //if correct, need to splice the answer
@@ -198,11 +199,9 @@ function createQuestionArray() {
         questionArray.push(returnArray);
     }
 
-    console.log(questionArray);
-
 }
 
-function createQuizForm(array) {
+function createQuizForm() {
     let addText = "";
     let htmlText = `                
     <form role="form">
@@ -211,20 +210,16 @@ function createQuizForm(array) {
     for (let i = 0; i < 4; i++) {
 ; 
         addText = `
-        <input type="radio" name="birdType" value="` + array[i].valueText + 
-        `"><label class="birdTypeLabel">` + array[i].plainText + 
+        <input type="radio" name="birdType" value="` + questionArray[i].valueText + 
+        `"><label class="birdTypeLabel">` + questionArray[i].plainText + 
         `</label><br>`;
 
         htmlText = (htmlText + addText);
-
-        window.alert(addText);
     }
 
     $(htmlText).append(`</form>`);
 
-    $(".quiz-content").append(htmlText);
-
-    window.alert("It's working!!");   
+    $(".quiz-content").append(htmlText); 
 }
 
 function clearVariables(){
@@ -257,7 +252,7 @@ function nextQuestion() {
     questionArray.length = 0;
     clearQuizForm();
     createQuestionArray();
-    createQuizForm(questionArray);
+    createQuizForm();
     
     //pulls array data to next question
     //adds html code to quiz form to create answer data
