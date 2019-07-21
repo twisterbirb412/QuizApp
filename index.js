@@ -122,6 +122,12 @@ function restartButtonPress() {
 }
 
 function buttonSubmitQuestion() {
+    $(".main-container").on("click", ".submit", function(event) {
+        event.preventDefault();
+
+        assessAnswer();
+    });
+
     //happens when user hits Submit on question
     //user must select an answer before triggering next events
     //needs to trigger...
@@ -204,14 +210,14 @@ function createQuestionArray() {
 function createQuizForm() {
     let addText = "";
     let htmlText = `                
-    <form role="form">
+    <form role="form" class="quiz-form">
     <label>Which bird is this?</label><br>`;
 
     for (let i = 0; i < 4; i++) {
 ; 
         addText = `
         <input type="radio" name="birdType" value="` + questionArray[i].valueText + 
-        `"><label class="birdTypeLabel">` + questionArray[i].plainText + 
+        `"><label class="birdTypeLabel" id='` + [i] + `'>` + questionArray[i].plainText + 
         `</label><br>`;
 
         htmlText = (htmlText + addText);
@@ -234,25 +240,26 @@ function startQuiz() {
     createImageContainer();
     createQuizContainer();
     createQuestionResults();
-    //createQuizForm();
     //clearVariables();
     nextQuestion();
+    addSubmitButton();
     //nextImage();
 }
 
 //----action functions----------------
 
-function clearQuizForm() {
-    //clears out form content so that there isn't multiple
-    //question data
+function clearQuizContent() {
+    $('.quiz-content').empty();
 }
 
 function nextQuestion() {
     questCount++
     questionArray.length = 0;
-    clearQuizForm();
+    clearQuizContent();
+    createQuestionResults()
     createQuestionArray();
     createQuizForm();
+    nextImage();
     
     //pulls array data to next question
     //adds html code to quiz form to create answer data
@@ -260,16 +267,29 @@ function nextQuestion() {
 }
 
 function clearImageContainer() {
-    //clears out Image Container text
+    $('.img-container').empty();
 }
 
 function nextImage() {
     clearImageContainer();
-    //pulls image from array and puts it in image container
+    let htmlText = `
+    <img src="` + QUIZDATA[(questCount-1)].image + 
+    `" alt="placeholder text">`;
+
+    $('.img-container').append(htmlText);
 }
 
 function clearQuestionResults(){
-    //clears out text between <p> to just a space
+    $('.question-results').empty();
+}
+
+function addSubmitButton() {
+    let htmlText = `
+    <button type="submit" class="function-button submit">
+    <span class="button-label">Submit Answer</span>
+    </button>`;
+
+    $('.quiz-content').append(htmlText);
 }
 
 function continueQuiz() {
@@ -290,6 +310,9 @@ function showResults() {
 function toggleLabelClasses() {
     //pulls array data that shows whether answers are correct
     //adds that info to birdType class - based on value
+    for (i = 0; i < 4; i++) {
+
+    }
 }
 
 function toggleSubmittedAnswer() {
@@ -305,6 +328,34 @@ function assessAnswer() {
     //else
         //add text to the question-results as "Your answer is incorrect!  T
         //...The correct answer is __"
+
+    let radioValue = "";
+
+    let nameValue = document.getElementsByName('birdType');
+    
+    for (let i=0; i<4; i++) {
+        if (nameValue[i].checked) {
+            radioValue = nameValue[i].value;
+        }
+    }
+    
+    window.alert("You selected " + radioValue);
+
+    toggleSelected(radioValue);
+
+    
+
+
+}
+
+function toggleSelected(value) {
+    for (i = 0; i < 4; i++) {
+        if (value === questionArray[i].valueText) {
+            $('#' + i).toggleClass(' selected');
+
+            window.alert("Toggleclass attempted");
+        }
+    }
 }
 
 function submitButtonToContinue(){
