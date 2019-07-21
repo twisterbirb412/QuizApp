@@ -205,6 +205,8 @@ function createQuestionArray() {
         questionArray.push(returnArray);
     }
 
+    console.log(questionArray);
+
 }
 
 function createQuizForm() {
@@ -315,9 +317,48 @@ function toggleLabelClasses() {
     }
 }
 
-function toggleSubmittedAnswer() {
+function toggleSubmittedAnswer(value) {
     //calls variable that stores the user's answer
     //adds class 'selected' to the label class
+    for (i = 0; i < 4; i++) {
+        if (value === questionArray[i].valueText) {
+            $('#' + i).toggleClass(' selected');
+        }
+    }
+}
+
+function toggleCorrectAnswer() {
+    for (let i = 0; i < 4; i++) {
+        if (questionArray[i].correctAns === true){
+            $('#' + i).toggleClass(' correct');
+        }
+        else {
+            $('#' + i).toggleClass(' incorrect');
+        }
+    }
+}
+
+function correctOrIncorrect() {
+    let correctlyAnswered = false;
+    let radioItem = '#' + String(i);
+    let htmlText = "";
+
+    for (let i = 0; i < 4; i++) {
+        if ($('radioItem').contains(".selected") && $('radioItem').contains(".correct")) {
+            correctlyAnswered = true;
+        }
+    }
+
+    if (correctlyAnswered === true) {
+        htmlText = `<p>Correct!</p>`;
+        $('.question-results').append(htmlText);
+        $('.question-results').toggleClass(' correct-answer');
+    }
+    else {
+        htmlText = `<p>Incorrect!</p>`;
+        $('.question-results').append(htmlText);
+        $('.question-results').toggleClass(' incorrect-answer'); 
+    }
 }
 
 function assessAnswer() {
@@ -338,25 +379,17 @@ function assessAnswer() {
             radioValue = nameValue[i].value;
         }
     }
-    
-    window.alert("You selected " + radioValue);
 
-    toggleSelected(radioValue);
+    toggleSubmittedAnswer(radioValue);
+    toggleCorrectAnswer();
+    correctOrIncorrect();
+    
 
     
 
 
 }
 
-function toggleSelected(value) {
-    for (i = 0; i < 4; i++) {
-        if (value === questionArray[i].valueText) {
-            $('#' + i).toggleClass(' selected');
-
-            window.alert("Toggleclass attempted");
-        }
-    }
-}
 
 function submitButtonToContinue(){
     //changes the label of the function-button to Continue
