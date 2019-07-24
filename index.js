@@ -126,6 +126,8 @@ function buttonSubmitQuestion() {
         event.preventDefault();
 
         assessAnswer();
+        toggleSubmitContinue('Continue');
+
     });
 
     //happens when user hits Submit on question
@@ -138,9 +140,17 @@ function buttonSubmitQuestion() {
 }
 
 function buttonContinueQuiz() {
-    //listens for when user presses continue button
-    //continueQuiz();
-    //need to assess whether it is the last question of the quiz
+    $(".main-container").on("click", ".continue", function(event) {
+        event.preventDefault();
+
+        window.alert("continue button pressed");
+
+        nextQuestion();
+    
+        //need to assess whether it is the last question of the quiz
+
+        toggleSubmitContinue('Submit Answer');
+    });
 }
 
 //-----initializing quiz-----------------------
@@ -167,8 +177,8 @@ function createQuizContainer() {
 }
 
 function createQuestionResults() {
-    let htmlText = `<div class="quizresults"><p>  </p></div>`
-    $(".quiz-results").append(htmlText);
+    let htmlText = `<div class="quiz-results"><p>  </p></div>`
+    $(".main-container").append(htmlText);
 }
 
 function createQuestionArray() {
@@ -234,17 +244,26 @@ function clearVariables(){
     //resets question count and score variables
 }
 
+function createCountContainer() {
+    let htmlText = `
+    <div class="count-container question">
+    </div>
+    <div class="count-container score">
+    </div>
+    `
+    $('.main-container').append(htmlText);
+}
+
 function startQuiz() {
     //restarts the quiz at question 1
     //changes second class of 'bookend-screen' to 'quiz-container'
     clearMainContainer();
     resetCountAndScore();
-    createImageContainer();
-    createQuizContainer();
+    createImageContainer();    
     createQuestionResults();
-    //clearVariables();
+    createQuizContainer();
+    clearVariables();
     nextQuestion();
-    addSubmitButton();
     //nextImage();
 }
 
@@ -258,14 +277,11 @@ function nextQuestion() {
     questCount++
     questionArray.length = 0;
     clearQuizContent();
-    createQuestionResults()
+    clearQuizResults();
     createQuestionArray();
     createQuizForm();
     nextImage();
-    
-    //pulls array data to next question
-    //adds html code to quiz form to create answer data
-    //puts question count variable count+1
+    addSubmitButton();
 }
 
 function clearImageContainer() {
@@ -281,8 +297,8 @@ function nextImage() {
     $('.img-container').append(htmlText);
 }
 
-function clearQuestionResults(){
-    $('.question-results').empty();
+function clearQuizResults(){
+    $('.quiz-results').empty();
 }
 
 function addSubmitButton() {
@@ -294,27 +310,22 @@ function addSubmitButton() {
     $('.quiz-content').append(htmlText);
 }
 
+function toggleSubmitContinue(text) {
+    $('.function-button').toggleClass('submit')
+    $('.function-button').toggleClass('continue')
+    $('.button-label').empty();
+    $('.button-label').append(text);
+}
+
 function continueQuiz() {
     nextQuestion();
-    nextImage();
-    clearQuestionResults();
 }
 
 //------after answer is submitted-------------
 
 function showResults() {
-    toggleLabelClasses();
     toggleSubmittedAnswer();
     assessAnswer();
-    submitButtonToContinue();
-}
-
-function toggleLabelClasses() {
-    //pulls array data that shows whether answers are correct
-    //adds that info to birdType class - based on value
-    for (i = 0; i < 4; i++) {
-
-    }
 }
 
 function toggleSubmittedAnswer(value) {
@@ -329,47 +340,39 @@ function toggleSubmittedAnswer(value) {
 
 function toggleCorrectAnswer() {
     for (let i = 0; i < 4; i++) {
-        if (questionArray[i].correctAns === true){
+        if (questionArray[i].booleanAnswer === true){
             $('#' + i).toggleClass(' correct');
         }
         else {
-            $('#' + i).toggleClass(' incorrect');
+            $('#' + i).toggleClass(' wrong');
         }
     }
 }
 
 function correctOrIncorrect() {
     let correctlyAnswered = false;
-    let radioItem = '#' + String(i);
     let htmlText = "";
 
     for (let i = 0; i < 4; i++) {
-        if ($('radioItem').contains(".selected") && $('radioItem').contains(".correct")) {
-            correctlyAnswered = true;
+        if ($(`#` + i).hasClass("selected") && $(`#`+ i).hasClass("correct")) {
+            correctlyAnswered = true; 
         }
     }
 
     if (correctlyAnswered === true) {
         htmlText = `<p>Correct!</p>`;
-        $('.question-results').append(htmlText);
-        $('.question-results').toggleClass(' correct-answer');
+        $('.quiz-results').append(htmlText);
+        $('.quiz-results').toggleClass(' correct-answer');
+        scoreCount++;
     }
     else {
         htmlText = `<p>Incorrect!</p>`;
-        $('.question-results').append(htmlText);
-        $('.question-results').toggleClass(' incorrect-answer'); 
+        $('.quiz-results').append(htmlText);
+        $('.quiz-results').toggleClass(' wrong-answer'); 
     }
 }
 
 function assessAnswer() {
-    //compares whether use's submitted value is correct
-    //if statement - if the user's answer is the same as the
-    //value that has the value correct
-        //add text to the question-results as "Your answer is correct"
-    //else
-        //add text to the question-results as "Your answer is incorrect!  T
-        //...The correct answer is __"
-
     let radioValue = "";
 
     let nameValue = document.getElementsByName('birdType');
@@ -383,18 +386,8 @@ function assessAnswer() {
     toggleSubmittedAnswer(radioValue);
     toggleCorrectAnswer();
     correctOrIncorrect();
-    
-
-    
-
-
 }
 
-
-function submitButtonToContinue(){
-    //changes the label of the function-button to Continue
-    //instead of Submit Answer label changes to Continue
-}
 
 //-----End of Quiz---------
 
