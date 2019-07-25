@@ -103,8 +103,6 @@ let questCount = 0;
 let scoreCount = 0;
 let questionArray = [];
 
-
-
 //The starting screen 
 //should have a button that users can click to start the quiz.
 
@@ -122,11 +120,12 @@ function restartButtonPress() {
 }
 
 function buttonSubmitQuestion() {
-    $(".main-container").on("click", ".submit", function(event) {
+    $(".main-container").on("click", "button.submit", function(event) {
         event.preventDefault();
 
         assessAnswer();
-        toggleSubmitContinue('Continue');
+        toggleSubmitToContinue();
+        
 
     });
 
@@ -140,16 +139,13 @@ function buttonSubmitQuestion() {
 }
 
 function buttonContinueQuiz() {
-    $(".main-container").on("click", ".continue", function(event) {
+    $(".main-container").on("click", "button.continue", function(event) {
         event.preventDefault();
-
-        window.alert("continue button pressed");
 
         nextQuestion();
     
         //need to assess whether it is the last question of the quiz
 
-        toggleSubmitContinue('Submit Answer');
     });
 }
 
@@ -254,6 +250,17 @@ function createCountContainer() {
     $('.main-container').append(htmlText);
 }
 
+function populateQuestionCountContainer(count) {
+    $('.question').empty();
+    htmlText = 'Question ';
+    $('.question').append(htmlText + count);
+}
+
+function populateScoreCountCountainer(score, count) {
+    $('.score').empty();
+    $('.score').append('You scored ' + score+ ' out of '+ count +' questions correctly!');
+}
+
 function startQuiz() {
     //restarts the quiz at question 1
     //changes second class of 'bookend-screen' to 'quiz-container'
@@ -264,7 +271,6 @@ function startQuiz() {
     createQuizContainer();
     clearVariables();
     nextQuestion();
-    //nextImage();
 }
 
 //----action functions----------------
@@ -282,6 +288,8 @@ function nextQuestion() {
     createQuizForm();
     nextImage();
     addSubmitButton();
+    populateQuestionCountContainer(questCount);
+    populateScoreCountCountainer(scoreCount, questCount);
 }
 
 function clearImageContainer() {
@@ -310,11 +318,11 @@ function addSubmitButton() {
     $('.quiz-content').append(htmlText);
 }
 
-function toggleSubmitContinue(text) {
+function toggleSubmitToContinue() {
     $('.function-button').toggleClass('submit')
     $('.function-button').toggleClass('continue')
     $('.button-label').empty();
-    $('.button-label').append(text);
+    $('.button-label').append('Continue');
 }
 
 function continueQuiz() {
@@ -410,6 +418,7 @@ function runQuizApp() {
     startButtonPress();
     restartButtonPress();
     buttonSubmitQuestion();
+    buttonContinueQuiz();
 
     
 }
