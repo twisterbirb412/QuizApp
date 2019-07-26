@@ -114,11 +114,6 @@ function startButtonPress() {
     });
 }
 
-function restartButtonPress() {
-    //listen for when restart button press
-    //startQuiz();
-}
-
 function buttonSubmitQuestion() {
     $(".main-container").on("click", "button.submit", function(event) {
         event.preventDefault();
@@ -142,10 +137,12 @@ function buttonContinueQuiz() {
     $(".main-container").on("click", "button.continue", function(event) {
         event.preventDefault();
 
-        nextQuestion();
-    
-        //need to assess whether it is the last question of the quiz
-
+        if (questCount === 3) {
+            endOfQuiz();
+        }
+        else {
+            nextQuestion();
+        }
     });
 }
 
@@ -159,6 +156,10 @@ function clearMainContainer() {
 function resetCountAndScore() {
     questCount = 0;
     scoreCount = 0;
+}
+
+function clearCountContainers() {
+    $('.count-container').empty();
 }
 
 function createImageContainer(){
@@ -240,16 +241,6 @@ function clearVariables(){
     //resets question count and score variables
 }
 
-function createCountContainer() {
-    let htmlText = `
-    <div class="count-container question">
-    </div>
-    <div class="count-container score">
-    </div>
-    `
-    $('.main-container').append(htmlText);
-}
-
 function populateQuestionCountContainer(count) {
     $('.question').empty();
     htmlText = 'Question ';
@@ -307,6 +298,7 @@ function nextImage() {
 
 function clearQuizResults(){
     $('.quiz-results').empty();
+    $('.quiz-results').removeClass('correct-answer wrong-answer');
 }
 
 function addSubmitButton() {
@@ -323,10 +315,6 @@ function toggleSubmitToContinue() {
     $('.function-button').toggleClass('continue')
     $('.button-label').empty();
     $('.button-label').append('Continue');
-}
-
-function continueQuiz() {
-    nextQuestion();
 }
 
 //------after answer is submitted-------------
@@ -400,23 +388,38 @@ function assessAnswer() {
 //-----End of Quiz---------
 
 function toggleMainContainerToBookend() {
+    $('.main-container').toggleClass('.quiz-container');
+    $('.main-container').toggleClass('.bookend-container');
     //change main-container class from quiz-container to bookend-container
 }
 
 function addEndText() {
-    //add code to main-container bookend-screen
-    //<h1>How well do you know your birds?</h1>
-    //<h2>You identified VARIABLE out of 10 birds correctly!</h2>
+    let htmlText = `
+    <h1>How well do you know your birds?</h1>` + 
+    `<h2>You identified ` + scoreCount + ` out of 10 birds correctly!</h2>`;
+
+    $('.main-container').append(htmlText);
+}
+
+function addButtonPlayAgain() {
+    let htmlText = `
+    <button type="submit" class="function-button start">
+    <span class="button-label">Play Again?</span>
+    </button>`;
+
+    $('.main-container').append(htmlText);
 }
 
 function endOfQuiz() {
-    clearMainContainerToBookend();
+    clearMainContainer();
+    clearCountContainers();
+    toggleMainContainerToBookend();
     addEndText();
+    addButtonPlayAgain();
 }
 
 function runQuizApp() {
     startButtonPress();
-    restartButtonPress();
     buttonSubmitQuestion();
     buttonContinueQuiz();
 
