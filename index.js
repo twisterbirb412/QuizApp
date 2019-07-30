@@ -37,7 +37,7 @@ function buttonContinueQuiz() {
 
         toggleShowScore();
 
-        if (questCount === 3) {
+        if (questCount === 10) {
             endOfQuiz();
         }
         else {
