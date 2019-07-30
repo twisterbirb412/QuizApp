@@ -1,10 +1,12 @@
 * {
     box-sizing: border-box;
+    font-family: Verdana, Geneva, sans-serif;
 }
 
 body {
     margin: auto;
     padding: 10px;
+    background-image: url("Bird_Photos/birds_wire.jpg");
 }
 
 main {
@@ -12,6 +14,7 @@ main {
   flex-direction: column;
   align-items: center;
 }
+
 
 header {
     padding: 5px;
@@ -22,21 +25,28 @@ header {
 }
 
 .question {
-  top: 10px;
-  left: 10px;
+  top: 3%;
+  left: 3%;
+  color: #434343;
+}
+
+.score.show {
+  top: 3%;
+  right: 3%;
+  color: #434343;
+  font-size: 16px;
 }
 
 .score {
-  top: 5px;
-  right: 10px;
+  font-size: 0;
 }
 
-h2 {
+h1 {
   font-size: 36px;
   font-style: bold;
 }
 
-h3 {
+h2 {
   font-size: 20px;
   font-style: bold;
 }
@@ -55,11 +65,18 @@ button {
     width: 80%;
     height: 80%;
     margin: 7%;
-    border: 1px solid gray;
+    border: 3px outset gray;
     padding: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #434343;
+    color: white;
+    text-shadow: 1px 1px black;
+  }
+
+  .bookend {
+    text-align: center;
   }
 
 .img-container {
@@ -79,9 +96,16 @@ img {
    padding: 30px;
  }
 
+input[name="birdType"] {
+   border: 20px solid blue;
+ }
+
+ .function-button:hover {
+   border: 2px solid blue;
+ }
 
  .correct.selected {
-   color: green;
+   color: light greenyellow;
  }
 
  .wrong.selected {
@@ -90,11 +114,7 @@ img {
 
 
  .selected {
-   font-weight: 900;
- }
-
- .wrong {
-   text-decoration: line-through;
+   font-weight: 700;
  }
 
 p {
@@ -106,5 +126,9 @@ p {
 }
 
 .correct-answer {
-  color: green;
+  color: greenyellow;
+}
+
+.correct {
+  color: greenyellow;
 }

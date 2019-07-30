@@ -1,102 +1,5 @@
 `use strict`;
 
-//Can you name the bird?
-
-QUIZDATA = [
-
-    //Question1
-    {
-    image: `https://images.wildaboutbirds.com/backyard-birds/bluejay.jpg`,
-    answer1: `Cardinal`,
-    answer2: `Bluejay__correct`,
-    answer3: `Kingfisher`,
-    answer4: `White-breasted nuthatch`
-    },
-    //Question2
-    {
-    image: `https://live.staticflickr.com/2911/32250438734_05bb5959cd.jpg`,
-    answer1: `White-Breasted Nuthatch__correct`,
-    answer2: `Tufted Titmouse`,
-    answer3: `Black capped chickadee`,
-    answer4: `Mockingbird`
-    },
-    
-    //Question3
-    {
-    image: `https://live.staticflickr.com/4706/38902175905_182fdf1560.jpg`,
-    answer1: `Pine thrush`,
-    answer2: `Black-capped chickadee`,
-    answer3: `Carolina chickadee__correct`,
-    answer4: `English Sparrow`
-    },
-    
-    //Question4
-    {
-    image: `http://jaysbirdbarn.com/wp-content/uploads/2016/11/jamesmorrismourningdove.jpg`,
-    answer1: `Mockingbird`,
-    answer2: `Mourning dove__correct`,
-    answer3: `Tufted titmouse`,
-    answer4: `English sparrow`
-    },
-    
-    //Question5
-    {
-    image: `http://dreamstop.com/wp-content/uploads/2016/08/Redwing-Blackbird.jpg`,
-    answer1: `Cardinal`,
-    answer2: `Starling`,
-    answer3: `Red-winged blackbird__correct`,
-    answer4: `Grackle`
-    },
-    
-    //Question6
-    {
-    image: `https://www.audubon.org/sites/default/files/styles/grid_gallery_lightbox/public/Pileated_Woodpecker_m57-4-021_l_1.jpg?itok=KS3GHSUB`,
-    answer1: `Downy woodpecker`,
-    answer2: `Pileated woodpecker__correct`,
-    answer3: `Red-bellied woodpecker`,
-    answer4: `Ivory billed woodpecker`
-    },
-    
-    //Question7
-    {
-    image: `https://www.allaboutbirds.org/guide/assets/photo/63667351-1900px.jpg?__hstc=46425656.2d3fcf2f99a265337744294b740e0787.1562198400035.1562198400036.1562198400037.1&__hssc=46425656.1.1562198400038&__hsfp=1817143912`,
-    answer1: `Cardinal__correct`,
-    answer2: `English sparrow`,
-    answer3: `Mockingbird`,
-    answer4: `Robin`
-    },
-    
-    //Question8
-    {
-    image: `https://www.bl.uk/britishlibrary/~/media/bl/global/language%20of%20birds/mockingbird-thinkstockphotos-533904476.jpg`,
-    answer1: `Bluejay`,
-    answer2: `Starling`,
-    answer3: `Mockingbird__correct`,
-    answer4: `Killdeer`
-    },
-    
-    //Question9
-    {
-    image: `https://www.audubon.org/sites/default/files/styles/grid_gallery_lightbox/public/Tufted_Titmouse_m17-67-821_l_1.jpg?itok=Nz-OBrmi`,
-    answer1: `English sparrow`,
-    answer2: `Starling`,
-    answer3: `Tufted titmouse__correct`,
-    answer4: `Black-capped chickadee`
-    },
-    
-    //Question10
-    {
-    image: `http://4.bp.blogspot.com/-QZhybW74CwY/Tj59_Bhn6-I/AAAAAAAAAWI/LJxv-RjkZ5o/s1600/killdeer1.JPG`,
-    answer1: `Sandpiper`,
-    answer2: `Pine thrush`,
-    answer3: `Killdeer__correct`,
-    answer4: `English sparrow`
-    }
-    ]
-    
-
-//need starting array to store quiz data
-
 //need variable to store question count and score count
 //need variable that stores submitted answer
 let questCount = 0;
@@ -118,24 +21,21 @@ function buttonSubmitQuestion() {
     $(".main-container").on("click", "button.submit", function(event) {
         event.preventDefault();
 
-        assessAnswer();
-        toggleSubmitToContinue();
-        
-
+        if (answerSubmitted() === true) {
+            assessAnswer();
+            toggleSubmitToContinue();
+        }
+        else {
+            window.alert("You must select an answer before continuing.");
+        }  
     });
-
-    //happens when user hits Submit on question
-    //user must select an answer before triggering next events
-    //needs to trigger...
-        //event that adds classes to the birdtype in the label
-        //based on what the array says the answer is
-        //stores variable that contains user answer
-        //showResults();
 }
 
 function buttonContinueQuiz() {
     $(".main-container").on("click", "button.continue", function(event) {
         event.preventDefault();
+
+        toggleShowScore();
 
         if (questCount === 3) {
             endOfQuiz();
@@ -223,11 +123,19 @@ function createQuizForm() {
     <label>Which bird is this?</label><br>`;
 
     for (let i = 0; i < 4; i++) {
-; 
+
+        if (i === 0) {
+            addText = `
+            <input type="radio" name="birdType" value="` + questionArray[i].valueText + 
+            `" required /><label class="birdTypeLabel" id='` + [i] + `'>` + questionArray[i].plainText + 
+            `</label><br>`;
+        }
+      else {
         addText = `
         <input type="radio" name="birdType" value="` + questionArray[i].valueText + 
-        `"><label class="birdTypeLabel" id='` + [i] + `'>` + questionArray[i].plainText + 
+        `"/><label class="birdTypeLabel" id='` + [i] + `'>` + questionArray[i].plainText + 
         `</label><br>`;
+        }
 
         htmlText = (htmlText + addText);
     }
@@ -249,7 +157,7 @@ function populateQuestionCountContainer(count) {
 
 function populateScoreCountCountainer(score, count) {
     $('.score').empty();
-    $('.score').append('You scored ' + score+ ' out of '+ count +' questions correctly!');
+    $('.score').append(`You've scored ` + score+ ' out of '+ count +' questions correctly!');
 }
 
 function startQuiz() {
@@ -262,6 +170,7 @@ function startQuiz() {
     createQuizContainer();
     clearVariables();
     nextQuestion();
+    toggleMainContainerToBookend();
 }
 
 //----action functions----------------
@@ -289,9 +198,10 @@ function clearImageContainer() {
 
 function nextImage() {
     clearImageContainer();
+
     let htmlText = `
     <img src="` + QUIZDATA[(questCount-1)].image + 
-    `" alt="placeholder text">`;
+    `" alt="`+ String(QUIZDATA[(questCount-1)].altDesc) + `">`;
 
     $('.img-container').append(htmlText);
 }
@@ -368,6 +278,22 @@ function correctOrIncorrect() {
     }
 }
 
+function toggleShowScore() {
+    $('.score').toggleClass("show");
+}
+
+function answerSubmitted() {
+    let checkedAnswer = false;
+    let nameValue = document.getElementsByName('birdType');
+
+    for (let i=0; i<4; i++) {
+        if (nameValue[i].checked) {
+            checkedAnswer = true;
+        }
+    }
+    return checkedAnswer;
+}
+
 function assessAnswer() {
     let radioValue = "";
 
@@ -382,21 +308,22 @@ function assessAnswer() {
     toggleSubmittedAnswer(radioValue);
     toggleCorrectAnswer();
     correctOrIncorrect();
+    toggleShowScore();
 }
 
 
 //-----End of Quiz---------
 
 function toggleMainContainerToBookend() {
-    $('.main-container').toggleClass('.quiz-container');
-    $('.main-container').toggleClass('.bookend-container');
+    $('.main-container').toggleClass('quiz-container');
+    $('.main-container').toggleClass('bookend');
     //change main-container class from quiz-container to bookend-container
 }
 
 function addEndText() {
     let htmlText = `
-    <h1>How well do you know your birds?</h1>` + 
-    `<h2>You identified ` + scoreCount + ` out of 10 birds correctly!</h2>`;
+    <h2>How well do you know your birds?</h2>` + 
+    `<h1>You identified ` + scoreCount + ` out of 10 birds correctly!</h1>`;
 
     $('.main-container').append(htmlText);
 }
