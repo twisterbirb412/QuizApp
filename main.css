@@ -96,8 +96,8 @@ img {
    padding: 30px;
  }
 
-input[name="birdType"] {
-   border: 20px solid blue;
+.quiz-form input[type="radio"]:hover + label {
+   color: lightblue;
  }
 
  .function-button:hover {

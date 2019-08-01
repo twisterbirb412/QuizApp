@@ -152,7 +152,7 @@ function clearVariables(){
 function populateQuestionCountContainer(count) {
     $('.question').empty();
     htmlText = 'Question ';
-    $('.question').append(htmlText + count);
+    $('.question').append(htmlText + count + ' of 10');
 }
 
 function populateScoreCountCountainer(score, count) {
@@ -189,7 +189,6 @@ function nextQuestion() {
     nextImage();
     addSubmitButton();
     populateQuestionCountContainer(questCount);
-    populateScoreCountCountainer(scoreCount, questCount);
 }
 
 function clearImageContainer() {
@@ -308,6 +307,7 @@ function assessAnswer() {
     toggleSubmittedAnswer(radioValue);
     toggleCorrectAnswer();
     correctOrIncorrect();
+    populateScoreCountCountainer(scoreCount, questCount);
     toggleShowScore();
 }
 
