@@ -20,6 +20,10 @@ header {
     padding: 5px;
 }
 
+label {
+  display: block;
+}
+
 .count-container {
   position: absolute;
 }
@@ -56,10 +60,6 @@ button {
     margin: 20px;
 
   }
-  
-  button:hover {
-    cursor: pointer;
-  }
 
 .main-container {
     width: 80%;
@@ -84,13 +84,14 @@ button {
     max-width: 80%;
     margin-top: 10px;
     object-fit: contain;
-    border: 3px outset gray;
+    
 }
 
 img {
    max-height: 100%;
    max-width: 100%;
    object-fit: contain;
+   border: 3px outset gray;
 
  }
 
@@ -98,12 +99,13 @@ img {
    padding: 30px;
  }
 
-.quiz-form input[type="radio"]:hover + label {
+label:hover {
    color: lightblue;
  }
 
  .function-button:hover {
    border: 2px solid blue;
+   cursor: pointer;
  }
 
  .correct.selected {
@@ -119,7 +121,7 @@ img {
    font-weight: 700;
  }
 
-p {
+.quiz-results * {
   font-size: 20px;
 }
 

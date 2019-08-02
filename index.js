@@ -124,18 +124,12 @@ function createQuizForm() {
 
     for (let i = 0; i < 4; i++) {
 
-        if (i === 0) {
-            addText = `
-            <input type="radio" name="birdType" value="` + questionArray[i].valueText + 
-            `" required /><label class="birdTypeLabel" id='` + [i] + `'>` + questionArray[i].plainText + 
-            `</label><br>`;
-        }
-      else {
         addText = `
-        <input type="radio" name="birdType" value="` + questionArray[i].valueText + 
-        `"/><label class="birdTypeLabel" id='` + [i] + `'>` + questionArray[i].plainText + 
-        `</label><br>`;
-        }
+        <label class="birdTypeLabel" id='` + [i] + `'>` + 
+        `<input type="radio" name="birdType" value="` + questionArray[i].valueText + 
+        `"/>` + questionArray[i].plainText + 
+        `</label>`;
+        
 
         htmlText = (htmlText + addText);
     }
@@ -244,17 +238,22 @@ function toggleSubmittedAnswer(value) {
 }
 
 function toggleCorrectAnswer() {
+    let correctAnswer = "";
+
     for (let i = 0; i < 4; i++) {
         if (questionArray[i].booleanAnswer === true){
             $('#' + i).toggleClass(' correct');
+            correctAnswer = questionArray[i].plainText;
         }
         else {
             $('#' + i).toggleClass(' wrong');
         }
     }
+
+    return correctAnswer;
 }
 
-function correctOrIncorrect() {
+function correctOrIncorrect(Answer) {
     let correctlyAnswered = false;
     let htmlText = "";
 
@@ -271,7 +270,7 @@ function correctOrIncorrect() {
         scoreCount++;
     }
     else {
-        htmlText = `<p>Incorrect!</p>`;
+        htmlText = `<p>Incorrect!  The correct answer is ` + Answer + `.</p>`;
         $('.quiz-results').append(htmlText);
         $('.quiz-results').toggleClass(' wrong-answer'); 
     }
@@ -305,8 +304,8 @@ function assessAnswer() {
     }
 
     toggleSubmittedAnswer(radioValue);
-    toggleCorrectAnswer();
-    correctOrIncorrect();
+    ;
+    correctOrIncorrect(toggleCorrectAnswer());
     populateScoreCountCountainer(scoreCount, questCount);
     toggleShowScore();
 }
